@@ -19,11 +19,11 @@ struct SelectWalletView: View {
                 
                 TextField("Enter Ethereum wallet address", text: $walletAddress)
                     .textFieldStyle(PlainTextFieldStyle())
-                    .padding(.horizontal)
+                    .padding(.horizontal, 16)
                     .padding(.vertical, 40)
                     .disableAutocorrection(true)
                     .autocapitalization(.none)
-                    
+                
                 
                 Spacer()
                 
@@ -34,21 +34,26 @@ struct SelectWalletView: View {
                         .font(.system(size: 12.0))
                 }
                 VStack {
-                    Button("Select") {}
-                        .frame(maxWidth: .infinity)
-                        .foregroundColor(.white)
-                        .background(Color.blue)
-                        .padding(.vertical, 12)
-                        .cornerRadius(12)
-                        .onTapGesture {
-                            print("onTapGesture is triggered")
-                            if isValidWalletAddress(walletAddress) {
-                                UserPreferences().setWalletAddress(walletAddress)
-                                isActive = true
-                            } else {
-                                errorMessage = "Invalid Ethereum wallet address"
-                            }
+                    Button(action: {
+                        if isValidWalletAddress(walletAddress) {
+                            UserPreferences().setWalletAddress(walletAddress)
+                            isActive = true
+                        } else {
+                            errorMessage = "Invalid Ethereum wallet address"
                         }
+                    }) {
+                        Text("Select")
+                            .frame(maxWidth: .infinity)
+                            .foregroundColor(Color(.systemBackground))
+                            .padding()
+                            .background(Color.primary)
+                            .cornerRadius(40)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .foregroundColor(Color(.systemBackground))
+                    .padding(.vertical, 12)
+                    .padding(.horizontal, 16)
+                    .cornerRadius(10)
                     
                     if isActive {
                         NavigationLink(destination: DashboardView(), isActive: $isActive) {
