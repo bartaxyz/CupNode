@@ -54,7 +54,7 @@ struct TokenRow: View {
                     Text("$\(value)")
                 }
                 if let change = token.fiat?.first?.percentChange24Hour {
-                    Text("\(change * 100, specifier: "%.2f")%")
+                    Text("\(change, specifier: "%.2f")%")
                         .foregroundColor(change >= 0 ? .green : .red)
                         .font(.caption)
                 }
