@@ -1,0 +1,6 @@
+framework module Pods_CupNode_CupNodeUITests {
+  umbrella header "Pods-CupNode-CupNodeUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
