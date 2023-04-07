@@ -40,14 +40,6 @@ class TokensViewModel: ObservableObject {
     func injectTokens(tokens: [NXYZTokenTypes.TokenWithID]) {
         self.tokens = tokens
         self.totalBalance = tokens.reduce(0) { $0 + ($1.token.fiat?.first?.tokenValue ?? 0) }
-        self.formattedTotalBalance = formatValue(self.totalBalance!, currency: "USD")
-    }
-    
-    func formatValue(_ value: Double, currency: String) -> String {
-        let formatter = NumberFormatter()
-        formatter.locale = Locale(identifier: "en_US")
-        formatter.numberStyle = .currency
-        formatter.currencyCode = currency
-        return formatter.string(from: NSNumber(value: value)) ?? ""
+        self.formattedTotalBalance = formatCurrency(self.totalBalance, currency: "USD")
     }
 }

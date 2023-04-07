@@ -26,6 +26,7 @@ struct NFTsView: View {
                     .padding(.vertical, 16)
                 }
                 .navigationTitle("NFTs")
+                .navigationBarTitleDisplayMode(.inline)
             }
         }
         .onAppear {

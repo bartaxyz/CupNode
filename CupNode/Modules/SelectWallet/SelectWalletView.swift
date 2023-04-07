@@ -7,21 +7,23 @@
 
 import SwiftUI
 
-struct AddWalletView: View {
+struct SelectWalletView: View {
     @State private var walletAddress = ""
     @State private var errorMessage = ""
+    @State private var isActive = false
     
     var body: some View {
         NavigationView {
             VStack {
                 Spacer()
                 
-                TextField("Enter Ethereum wallet address or ENS", text: $walletAddress)
+                TextField("Enter Ethereum wallet address", text: $walletAddress)
                     .textFieldStyle(PlainTextFieldStyle())
                     .padding(.horizontal)
                     .padding(.vertical, 40)
                     .disableAutocorrection(true)
                     .autocapitalization(.none)
+                    
                 
                 Spacer()
                 
@@ -31,38 +33,39 @@ struct AddWalletView: View {
                         .padding(.top)
                         .font(.system(size: 12.0))
                 }
-                
-                NavigationLink(destination: DashboardView()) {
-                    Text("Select")
+                VStack {
+                    Button("Select") {}
                         .frame(maxWidth: .infinity)
                         .foregroundColor(.white)
-                        .padding(.vertical, 10)
-                        .padding(.horizontal, 20)
                         .background(Color.blue)
+                        .padding(.vertical, 12)
                         .cornerRadius(12)
-                }
-                .padding(.bottom)
-                .padding(.horizontal)
-                .disabled(!isValidWalletAddress(walletAddress))
-                .onTapGesture {
-                    if isValidWalletAddress(walletAddress) {
-                        saveWalletAddress()
-                    } else {
-                        errorMessage = "Invalid Ethereum wallet address"
+                        .onTapGesture {
+                            print("onTapGesture is triggered")
+                            if isValidWalletAddress(walletAddress) {
+                                UserPreferences().setWalletAddress(walletAddress)
+                                isActive = true
+                            } else {
+                                errorMessage = "Invalid Ethereum wallet address"
+                            }
+                        }
+                    
+                    if isActive {
+                        NavigationLink(destination: DashboardView(), isActive: $isActive) {
+                            EmptyView()
+                        }
+                        .frame(width: 0, height: 0)
+                        .hidden()
                     }
                 }
             }
             .navigationTitle("Select Wallet")
         }
     }
-    
-    private func saveWalletAddress() {
-        UserDefaults.standard.set(walletAddress, forKey: "walletAddress")
-    }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        AddWalletView()
+        SelectWalletView()
     }
 }

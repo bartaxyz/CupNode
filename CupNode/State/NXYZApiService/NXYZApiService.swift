@@ -106,7 +106,9 @@ class NXYZApiService {
     }
     
     func getTransactions(for walletAddress: String, completion: @escaping (Result<[NXYZTransactionTypes.TransactionWithID], AFError>) -> Void) {
-        let url = createTransactionsUrl(path: "transactions", walletAddress: walletAddress, params: composeParams())!
+        let url = createTransactionsUrl(path: "transactions", walletAddress: walletAddress, params: composeParams(additionalParams: [
+            "tokenType": "native"
+        ]))!
         
         AF.request(
             url,

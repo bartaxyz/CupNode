@@ -11,11 +11,46 @@ struct TransactionRow: View {
     var transaction: NXYZTransactionTypes.Transaction
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text(transaction.fromAddress)
-                .font(.headline)
-            Text(transaction.transactionHash)
-                .font(.subheadline)
+        HStack(alignment: .center, spacing: 10) {
+            
+            if
+                let symbolLogos = transaction.value.symbolLogos,
+                !symbolLogos.isEmpty,
+                let imageUrl = URL(string: transaction.value.symbolLogos!.first!.URI)
+            {
+                AsyncImage(url: imageUrl) { image in
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 32, height: 32)
+                        .clipShape(Circle())
+                } placeholder: {
+                    ProgressView()
+                        .frame(width: 32, height: 32)
+                }
+            } else {
+                Circle()
+                    .frame(width: 32, height: 32)
+                    .foregroundColor(.primary.opacity(0.2))
+                    .overlay(
+                        Image(systemName: "questionmark")
+                            .foregroundColor(Color(.systemBackground))
+                    )
+            }
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text(transaction.value.symbol)
+                Text(formatRelativeTime(transaction.timestamp))
+                    .font(.caption)
+                    .foregroundColor(.gray)
+            }
+            Spacer()
+            VStack(alignment: .trailing, spacing: 4) {
+                Text(formatCurrency(transaction.value.fiat?.first?.tokenValue, currency: "USD"))
+                Text("\(transaction.value.symbol) \(transaction.value.tokenValue)")
+                    .font(.caption)
+                    .foregroundColor(.gray)
+            }
         }
     }
 }

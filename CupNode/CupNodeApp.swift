@@ -11,7 +11,7 @@ import SwiftUI
 struct CupNodeApp: App {
     var body: some Scene {
         WindowGroup {
-            AddWalletView()
+            SelectWalletView()
         }
     }
 }

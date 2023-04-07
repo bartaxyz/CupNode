@@ -18,8 +18,9 @@ struct TransactionsView: View {
                 List(viewModel.transactions) { transaction in
                     TransactionRow(transaction: transaction.transaction!)
                 }
-                .padding(.top)
+                .listStyle(PlainListStyle())
                 .navigationTitle("Transactions")
+                .navigationBarTitleDisplayMode(.inline)
             }
         }
         .onAppear {

@@ -18,8 +18,9 @@ struct TokensView: View {
                 List(viewModel.tokens) { token in
                     TokenRow(token: token.token)
                 }
-                .padding(.top)
                 .navigationTitle("Tokens (\(viewModel.formattedTotalBalance ?? "$-.--"))")
+                .navigationBarTitleDisplayMode(.inline)
+                .padding(.top, 0)
             }
         }
         .onAppear {

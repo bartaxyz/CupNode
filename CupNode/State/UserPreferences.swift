@@ -17,6 +17,7 @@ class UserPreferences {
     
     func setWalletAddress(_ address: String) {
         UserDefaults.standard.set(address, forKey: walletAddressKey)
+        UserDefaults.standard.synchronize()
     }
 }
 

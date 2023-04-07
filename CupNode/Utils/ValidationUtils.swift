@@ -21,12 +21,14 @@ func isValidWalletAddress(_ walletAddress: String) -> Bool {
     }
     
     // Check if wallet address is a valid ENS name
+    /*
     if let ensRegex = try? NSRegularExpression(pattern: "^[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.eth$") {
         let range = NSRange(location: 0, length: walletAddress.utf16.count)
         if ensRegex.firstMatch(in: walletAddress, options: [], range: range) != nil {
             return true
         }
     }
+    */
     
     // Wallet address is not a valid Ethereum address or ENS name
     return false
