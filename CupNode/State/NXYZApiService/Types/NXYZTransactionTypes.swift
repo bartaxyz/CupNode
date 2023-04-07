@@ -18,8 +18,8 @@ struct NXYZTransactionTypes {
         let timestamp: String?
         let actions: [String]?
         let status: Int
-        let fromAddress: String
-        let toAddress: String
+        let fromAddress: String?
+        let toAddress: String?
     }
     
     struct TransactionWithID: Codable, Identifiable {
